@@ -11,6 +11,8 @@
 		3F8E0E6525F78E24002785FD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8E0E6425F78E24002785FD /* ContentView.swift */; };
 		3F8E0E6725F78E27002785FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F8E0E6625F78E27002785FD /* Assets.xcassets */; };
 		3F8E0E6A25F78E27002785FD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F8E0E6925F78E27002785FD /* Preview Assets.xcassets */; };
+		3F8E0E7325F7D674002785FD /* GalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8E0E7225F7D674002785FD /* GalleryView.swift */; };
+		3F8E0E7625F7D72A002785FD /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8E0E7525F7D72A002785FD /* CanvasView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +22,8 @@
 		3F8E0E6625F78E27002785FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3F8E0E6925F78E27002785FD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3F8E0E6B25F78E27002785FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3F8E0E7225F7D674002785FD /* GalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryView.swift; sourceTree = "<group>"; };
+		3F8E0E7525F7D72A002785FD /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +58,8 @@
 			children = (
 				3F8E0E6225F78E24002785FD /* MyCanvasApp.swift */,
 				3F8E0E6425F78E24002785FD /* ContentView.swift */,
+				3F8E0E7225F7D674002785FD /* GalleryView.swift */,
+				3F8E0E7525F7D72A002785FD /* CanvasView.swift */,
 				3F8E0E6625F78E27002785FD /* Assets.xcassets */,
 				3F8E0E6B25F78E27002785FD /* Info.plist */,
 				3F8E0E6825F78E27002785FD /* Preview Content */,
@@ -139,6 +145,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F8E0E6525F78E24002785FD /* ContentView.swift in Sources */,
+				3F8E0E7325F7D674002785FD /* GalleryView.swift in Sources */,
+				3F8E0E7625F7D72A002785FD /* CanvasView.swift in Sources */,
 				3F8E0E6325F78E24002785FD /* MyCanvasApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
