@@ -11,7 +11,6 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             GalleryView()
-            CanvasView()
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }

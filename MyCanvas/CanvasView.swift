@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct CanvasView: View {
+    var drawingName: String
+    
     var body: some View {
-        Text("Canvas")
+        Text(drawingName)
     }
 }
 
 struct CanvasView_Previews: PreviewProvider {
     static var previews: some View {
-        CanvasView()
+        CanvasView(drawingName: "Drawing 1")
     }
 }
