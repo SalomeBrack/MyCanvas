@@ -11,7 +11,7 @@ struct CanvasView: View {
     var drawingName: String
     
     var body: some View {
-        Text(drawingName)
+        DrawingViewControllerRepresentable()
     }
 }
 
