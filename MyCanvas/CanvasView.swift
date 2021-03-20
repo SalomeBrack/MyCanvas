@@ -18,8 +18,13 @@ struct CanvasView: View {
 
 struct CanvasViewRepresentable: UIViewRepresentable {
     var canvasView: PKCanvasView = PKCanvasView()
+    var toolPicker: PKToolPicker = PKToolPicker()
     
     func makeUIView(context: Context) -> PKCanvasView {
+        toolPicker.setVisible(true, forFirstResponder: canvasView)
+        
+        canvasView.becomeFirstResponder()
+        
         return canvasView
     }
     
