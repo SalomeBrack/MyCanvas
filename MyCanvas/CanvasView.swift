@@ -22,7 +22,7 @@ struct CanvasViewRepresentable: UIViewRepresentable {
     
     func makeUIView(context: Context) -> PKCanvasView {
         toolPicker.setVisible(true, forFirstResponder: canvasView)
-        
+        toolPicker.addObserver(canvasView)
         canvasView.becomeFirstResponder()
         
         return canvasView
