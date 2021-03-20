@@ -6,12 +6,24 @@
 //
 
 import SwiftUI
+import PencilKit
 
 struct CanvasView: View {
     var drawingName: String
     
     var body: some View {
-        DrawingViewControllerRepresentable()
+        CanvasViewRepresentable()
+    }
+}
+
+struct CanvasViewRepresentable: UIViewRepresentable {
+    var canvasView: PKCanvasView = PKCanvasView()
+    
+    func makeUIView(context: Context) -> PKCanvasView {
+        return canvasView
+    }
+    
+    func updateUIView(_ uiView: PKCanvasView, context: Context) {
     }
 }
 
