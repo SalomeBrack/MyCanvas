@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3F8D44FE25FBC80D00B91E84 /* DrawingRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8D44FD25FBC80D00B91E84 /* DrawingRepresentable.swift */; };
-		3F8D450125FBC9D300B91E84 /* DrawingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8D450025FBC9D300B91E84 /* DrawingController.swift */; };
+		3F8CDFA4260E96F400B0C413 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3F8CDFA2260E96F400B0C413 /* DataModel.xcdatamodeld */; };
 		3F8E0E6325F78E24002785FD /* MyCanvasApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8E0E6225F78E24002785FD /* MyCanvasApp.swift */; };
 		3F8E0E6525F78E24002785FD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8E0E6425F78E24002785FD /* ContentView.swift */; };
 		3F8E0E6725F78E27002785FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F8E0E6625F78E27002785FD /* Assets.xcassets */; };
@@ -18,8 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3F8D44FD25FBC80D00B91E84 /* DrawingRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingRepresentable.swift; sourceTree = "<group>"; };
-		3F8D450025FBC9D300B91E84 /* DrawingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingController.swift; sourceTree = "<group>"; };
+		3F8CDFA3260E96F400B0C413 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		3F8E0E5F25F78E24002785FD /* MyCanvas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyCanvas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F8E0E6225F78E24002785FD /* MyCanvasApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCanvasApp.swift; sourceTree = "<group>"; };
 		3F8E0E6425F78E24002785FD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -64,10 +62,9 @@
 				3F8E0E6425F78E24002785FD /* ContentView.swift */,
 				3F8E0E7225F7D674002785FD /* GalleryView.swift */,
 				3F8E0E7525F7D72A002785FD /* CanvasView.swift */,
-				3F8D44FD25FBC80D00B91E84 /* DrawingRepresentable.swift */,
-				3F8D450025FBC9D300B91E84 /* DrawingController.swift */,
 				3F8E0E6625F78E27002785FD /* Assets.xcassets */,
 				3F8E0E6B25F78E27002785FD /* Info.plist */,
+				3F8CDFA2260E96F400B0C413 /* DataModel.xcdatamodeld */,
 				3F8E0E6825F78E27002785FD /* Preview Content */,
 			);
 			path = MyCanvas;
@@ -150,11 +147,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3F8D44FE25FBC80D00B91E84 /* DrawingRepresentable.swift in Sources */,
-				3F8D450125FBC9D300B91E84 /* DrawingController.swift in Sources */,
 				3F8E0E6525F78E24002785FD /* ContentView.swift in Sources */,
 				3F8E0E7325F7D674002785FD /* GalleryView.swift in Sources */,
 				3F8E0E7625F7D72A002785FD /* CanvasView.swift in Sources */,
+				3F8CDFA4260E96F400B0C413 /* DataModel.xcdatamodeld in Sources */,
 				3F8E0E6325F78E24002785FD /* MyCanvasApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -344,6 +340,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		3F8CDFA2260E96F400B0C413 /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				3F8CDFA3260E96F400B0C413 /* DataModel.xcdatamodel */,
+			);
+			currentVersion = 3F8CDFA3260E96F400B0C413 /* DataModel.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 3F8E0E5725F78E24002785FD /* Project object */;
 }
