@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3F8CDFA4260E96F400B0C413 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3F8CDFA2260E96F400B0C413 /* DataModel.xcdatamodeld */; };
+		3F8CDFA9260E999400B0C413 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8CDFA8260E999400B0C413 /* Persistence.swift */; };
 		3F8E0E6325F78E24002785FD /* MyCanvasApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8E0E6225F78E24002785FD /* MyCanvasApp.swift */; };
 		3F8E0E6525F78E24002785FD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8E0E6425F78E24002785FD /* ContentView.swift */; };
 		3F8E0E6725F78E27002785FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F8E0E6625F78E27002785FD /* Assets.xcassets */; };
@@ -18,6 +19,7 @@
 
 /* Begin PBXFileReference section */
 		3F8CDFA3260E96F400B0C413 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		3F8CDFA8260E999400B0C413 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		3F8E0E5F25F78E24002785FD /* MyCanvas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyCanvas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F8E0E6225F78E24002785FD /* MyCanvasApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCanvasApp.swift; sourceTree = "<group>"; };
 		3F8E0E6425F78E24002785FD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -62,9 +64,10 @@
 				3F8E0E6425F78E24002785FD /* ContentView.swift */,
 				3F8E0E7225F7D674002785FD /* GalleryView.swift */,
 				3F8E0E7525F7D72A002785FD /* CanvasView.swift */,
+				3F8CDFA8260E999400B0C413 /* Persistence.swift */,
+				3F8CDFA2260E96F400B0C413 /* DataModel.xcdatamodeld */,
 				3F8E0E6625F78E27002785FD /* Assets.xcassets */,
 				3F8E0E6B25F78E27002785FD /* Info.plist */,
-				3F8CDFA2260E96F400B0C413 /* DataModel.xcdatamodeld */,
 				3F8E0E6825F78E27002785FD /* Preview Content */,
 			);
 			path = MyCanvas;
@@ -150,6 +153,7 @@
 				3F8E0E6525F78E24002785FD /* ContentView.swift in Sources */,
 				3F8E0E7325F7D674002785FD /* GalleryView.swift in Sources */,
 				3F8E0E7625F7D72A002785FD /* CanvasView.swift in Sources */,
+				3F8CDFA9260E999400B0C413 /* Persistence.swift in Sources */,
 				3F8CDFA4260E96F400B0C413 /* DataModel.xcdatamodeld in Sources */,
 				3F8E0E6325F78E24002785FD /* MyCanvasApp.swift in Sources */,
 			);
