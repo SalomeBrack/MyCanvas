@@ -12,7 +12,7 @@ struct PersistenceController {
     let container: NSPersistentContainer
 
     init(inMemory: Bool = false) {
-        container = NSPersistentContainer(name: "MyCanvas")
+        container = NSPersistentCloudKitContainer(name: "MyCanvas")
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
         }
@@ -22,4 +22,24 @@ struct PersistenceController {
             }
         })
     }
+    
+    static var preview: PersistenceController = {
+        let result = PersistenceController(inMemory: true)
+        let viewContext = result.container.viewContext
+        
+        let Item1 = Drawing(context: viewContext)
+        Item1.id = UUID()
+        Item1.name = ""
+        Item1.timestamp = Date()
+        Item1.data = Data()
+        
+        do {
+            try viewContext.save()
+        } catch {
+            // Replace this
+            let nsError = error as NSError
+            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        }
+        return result
+    }()
 }

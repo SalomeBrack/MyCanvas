@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3F8CDFA4260E96F400B0C413 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3F8CDFA2260E96F400B0C413 /* DataModel.xcdatamodeld */; };
+		3F8CDFA4260E96F400B0C413 /* MyCanvas.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3F8CDFA2260E96F400B0C413 /* MyCanvas.xcdatamodeld */; };
 		3F8CDFA9260E999400B0C413 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8CDFA8260E999400B0C413 /* Persistence.swift */; };
 		3F8E0E6325F78E24002785FD /* MyCanvasApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8E0E6225F78E24002785FD /* MyCanvasApp.swift */; };
 		3F8E0E6525F78E24002785FD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8E0E6425F78E24002785FD /* ContentView.swift */; };
@@ -65,7 +65,7 @@
 				3F8E0E7225F7D674002785FD /* GalleryView.swift */,
 				3F8E0E7525F7D72A002785FD /* CanvasView.swift */,
 				3F8CDFA8260E999400B0C413 /* Persistence.swift */,
-				3F8CDFA2260E96F400B0C413 /* DataModel.xcdatamodeld */,
+				3F8CDFA2260E96F400B0C413 /* MyCanvas.xcdatamodeld */,
 				3F8E0E6625F78E27002785FD /* Assets.xcassets */,
 				3F8E0E6B25F78E27002785FD /* Info.plist */,
 				3F8E0E6825F78E27002785FD /* Preview Content */,
@@ -154,7 +154,7 @@
 				3F8E0E7325F7D674002785FD /* GalleryView.swift in Sources */,
 				3F8E0E7625F7D72A002785FD /* CanvasView.swift in Sources */,
 				3F8CDFA9260E999400B0C413 /* Persistence.swift in Sources */,
-				3F8CDFA4260E96F400B0C413 /* DataModel.xcdatamodeld in Sources */,
+				3F8CDFA4260E96F400B0C413 /* MyCanvas.xcdatamodeld in Sources */,
 				3F8E0E6325F78E24002785FD /* MyCanvasApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -346,13 +346,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		3F8CDFA2260E96F400B0C413 /* DataModel.xcdatamodeld */ = {
+		3F8CDFA2260E96F400B0C413 /* MyCanvas.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				3F8CDFA3260E96F400B0C413 /* DataModel.xcdatamodel */,
 			);
 			currentVersion = 3F8CDFA3260E96F400B0C413 /* DataModel.xcdatamodel */;
-			path = DataModel.xcdatamodeld;
+			path = MyCanvas.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
