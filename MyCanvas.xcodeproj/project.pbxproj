@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3F86672E2614CB6F00AB9CCB /* AddNewDrawingSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F86672D2614CB6F00AB9CCB /* AddNewDrawingSheetView.swift */; };
 		3F8CDFA4260E96F400B0C413 /* MyCanvas.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3F8CDFA2260E96F400B0C413 /* MyCanvas.xcdatamodeld */; };
 		3F8CDFA9260E999400B0C413 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8CDFA8260E999400B0C413 /* Persistence.swift */; };
 		3F8E0E6325F78E24002785FD /* MyCanvasApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8E0E6225F78E24002785FD /* MyCanvasApp.swift */; };
@@ -19,7 +18,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3F86672D2614CB6F00AB9CCB /* AddNewDrawingSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewDrawingSheetView.swift; sourceTree = "<group>"; };
 		3F8CDFA3260E96F400B0C413 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		3F8CDFA8260E999400B0C413 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		3F8E0E5F25F78E24002785FD /* MyCanvas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyCanvas.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -46,7 +44,6 @@
 		3F8E0E5625F78E24002785FD = {
 			isa = PBXGroup;
 			children = (
-				3F86672D2614CB6F00AB9CCB /* AddNewDrawingSheetView.swift */,
 				3F8E0E6125F78E24002785FD /* MyCanvas */,
 				3F8E0E6025F78E24002785FD /* Products */,
 			);
@@ -155,7 +152,6 @@
 			files = (
 				3F8E0E6525F78E24002785FD /* ContentView.swift in Sources */,
 				3F8E0E7325F7D674002785FD /* GalleryView.swift in Sources */,
-				3F86672E2614CB6F00AB9CCB /* AddNewDrawingSheetView.swift in Sources */,
 				3F8E0E7625F7D72A002785FD /* CanvasView.swift in Sources */,
 				3F8CDFA9260E999400B0C413 /* Persistence.swift in Sources */,
 				3F8CDFA4260E96F400B0C413 /* MyCanvas.xcdatamodeld in Sources */,

@@ -18,9 +18,10 @@ struct GalleryView: View {
     
     var body: some View {
         List {
-            //NavigationLink(destination: CanvasView(drawingName: "Drawing 1"), label: { Text("Drawing")})
             ForEach(drawings) { drawing in
-                Text("\(drawing.name ?? "") - \(drawing.timestamp!, formatter: dateFormatter)")
+                NavigationLink(destination: CanvasView(drawingId: drawing.id!), label: {
+                    Text("\(drawing.name!) - \(drawing.timestamp!, formatter: dateFormatter)")
+                })
             }
             .onDelete(perform: deleteDrawings)
         }
