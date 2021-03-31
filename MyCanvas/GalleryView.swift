@@ -13,56 +13,69 @@ struct GalleryView: View {
     @FetchRequest(sortDescriptors: [NSSortDescriptor(keyPath: \Drawing.timestamp, ascending: true)], animation: .default)
     private var drawings: FetchedResults<Drawing>
     
+    @State private var drawingName: String = "Untitled"
+    @State private var showAddDrawing: Bool = false
+    
     var body: some View {
         List {
             //NavigationLink(destination: CanvasView(drawingName: "Drawing 1"), label: { Text("Drawing")})
             ForEach(drawings) { drawing in
-                Text("\(drawing.name ?? "Untitled") - \(drawing.timestamp!, formatter: dateFormatter)")
+                Text("\(drawing.name ?? "") - \(drawing.timestamp!, formatter: dateFormatter)")
             }
             .onDelete(perform: deleteDrawings)
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
-                #if os(iOS)
                 EditButton()
-                #endif
             }
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: addDrawing) {
-                    Label("Add Drawing", systemImage: "plus")
-                }
+                Button(action: { showAddDrawing = true },
+                       label: { Label("Add Drawing", systemImage: "plus") })
             }
         }
+        .sheet(isPresented: $showAddDrawing, content: {
+            HStack() {
+                Text("Name: ")
+                TextField("Drawing Name", text: $drawingName, onCommit: { addDrawing() })
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+            }.padding()
+            
+            Button(action: {
+                showAddDrawing = false
+                addDrawing()
+            }, label: { Text("Create") })
+        })
     }
     
     private func addDrawing() {
-        withAnimation {
-            let newDrawing = Drawing(context: viewContext)
-            newDrawing.id = UUID()
-            newDrawing.timestamp = Date()
-            newDrawing.data = Data()
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
+        let newDrawing = Drawing(context: viewContext)
+        newDrawing.id = UUID()
+        newDrawing.name = drawingName
+        newDrawing.timestamp = Date()
+        newDrawing.data = Data()
+        
+        do { try viewContext.save() } catch {
+            let nsError = error as NSError
+            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        }
+    }
+    
+    
+    private func editDrawing(offsets: IndexSet) {
+        //
+        
+        do { try viewContext.save() } catch {
+            let nsError = error as NSError
+            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
         }
     }
 
     private func deleteDrawings(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { drawings[$0] }.forEach(viewContext.delete)
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
+        offsets.map { drawings[$0] }.forEach(viewContext.delete)
+        
+        do { try viewContext.save() } catch {
+            let nsError = error as NSError
+            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
         }
     }
 }
