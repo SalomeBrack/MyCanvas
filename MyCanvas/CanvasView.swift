@@ -5,30 +5,21 @@
 //  Created by Student on 09.03.21.
 //
 
+
 import SwiftUI
 import PencilKit
 
 struct CanvasView: View {
-    var drawingId: UUID
+    @State var drawingId: UUID
+    @State var canvasView = PKCanvasView()
     
     var body: some View {
-        CanvasViewRepresentable()
+        CanvasViewRepresentable(drawingId: $drawingId, canvasView: $canvasView)
     }
 }
 
-struct CanvasViewRepresentable: UIViewRepresentable {
-    var canvasView: PKCanvasView = PKCanvasView()
-    var toolPicker: PKToolPicker = PKToolPicker()
-    
-    func makeUIView(context: Context) -> PKCanvasView {
-        toolPicker.setVisible(true, forFirstResponder: canvasView)
-        toolPicker.addObserver(canvasView)
-        canvasView.becomeFirstResponder()
-        
-        return canvasView
-    }
-    
-    func updateUIView(_ uiView: PKCanvasView, context: Context) {
-        
+struct CanvasView_Previews: PreviewProvider {
+    static var previews: some View {
+        CanvasView(drawingId: UUID())
     }
 }
