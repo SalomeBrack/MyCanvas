@@ -5,8 +5,8 @@
 //  Created by Student on 09.03.21.
 //
 
-
 import SwiftUI
+import PencilKit
 
 struct GalleryView: View {
     @Environment(\.managedObjectContext) private var viewContext
@@ -33,10 +33,14 @@ struct GalleryView: View {
     
     func addDrawing() {
         let drawing = Drawing(context: viewContext)
+        
         drawing.id = UUID()
         drawing.name = "Drawing"
         drawing.timestamp = Date()
-        drawing.data = Data()
+        
+        let pkDrawing : PKDrawing = PKDrawing()
+        drawing.data = pkDrawing.dataRepresentation()
+        
         PersistenceController.shared.save()
     }
     

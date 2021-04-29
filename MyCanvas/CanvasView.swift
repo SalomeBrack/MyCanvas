@@ -10,11 +10,23 @@ import SwiftUI
 import PencilKit
 
 struct CanvasView: View {
+    @Environment(\.managedObjectContext) private var viewContext
+    @FetchRequest(entity: Drawing.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Drawing.timestamp, ascending: true)], animation: .default) private var drawings: FetchedResults<Drawing>
+    
     @State var drawingId: UUID
-    @State var canvasView = PKCanvasView()
     
     var body: some View {
-        CanvasViewRepresentable(drawingId: $drawingId, canvasView: $canvasView)
+        if let drawing = drawings.first(where: {$0.id == drawingId}) {
+            CanvasWrapper(drawing: drawing, onSaved: updateDrawing)
+                .ignoresSafeArea()
+        }
+    }
+    
+    func updateDrawing(drawingData: Data) {
+        if let drawing = drawings.first(where: {$0.id == drawingId}) {
+            drawing.data = drawingData
+            PersistenceController.shared.save()
+        }
     }
 }
 
