@@ -23,34 +23,22 @@ struct PersistenceController {
         })
     }
     
-    static var preview: PersistenceController = {
-        let result = PersistenceController(inMemory: true)
-        let viewContext = result.container.viewContext
-        
-        let Item1 = Drawing(context: viewContext)
-        Item1.id = UUID()
-        Item1.name = "My Drawing"
-        Item1.timestamp = Date()
-        Item1.data = Data()
-        
-        let Item2 = Drawing(context: viewContext)
-        Item2.id = UUID()
-        Item2.name = "Other Drawing"
-        Item2.timestamp = Date()
-        Item2.data = Data()
-        
-        let Item3 = Drawing(context: viewContext)
-        Item3.id = UUID()
-        Item3.timestamp = Date()
-        Item3.data = Data()
-        
-        do {
-            try viewContext.save()
-        } catch {
-            // Replace this
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+    func save(completion: @escaping (Error?) -> () = {_ in}) {
+        let context = container.viewContext
+        if context.hasChanges {
+            do {
+                try context.save()
+                completion(nil)
+            }
+            catch {
+                completion(error)
+            }
         }
-        return result
-    }()
+    }
+    
+    func delete(_ object: NSManagedObject, completion: @escaping (Error?) -> () = {_ in}) {
+        let context = container.viewContext
+        context.delete(object)
+        save(completion: completion)
+    }
 }

@@ -29,9 +29,3 @@ struct CanvasView: View {
         }
     }
 }
-
-struct CanvasView_Previews: PreviewProvider {
-    static var previews: some View {
-        CanvasView(drawingId: UUID())
-    }
-}
