@@ -9,12 +9,13 @@ import SwiftUI
 import PencilKit
 
 struct CanvasWrapper: UIViewRepresentable {
-    @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(entity: Drawing.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Drawing.timestamp, ascending: true)], animation: .default) private var drawings: FetchedResults<Drawing>
     var drawingId: UUID
     
     @State var canvasView = PKCanvasView()
     @State var toolPicker = PKToolPicker()
+    
+    @Binding var selectedColor: Color
     
     func makeUIView(context: Context) -> PKCanvasView {
         /// Bild laden
@@ -31,6 +32,8 @@ struct CanvasWrapper: UIViewRepresentable {
         toolPicker.setVisible(true, forFirstResponder: canvasView)
         toolPicker.addObserver(canvasView)
         canvasView.becomeFirstResponder()
+        
+        /// Stift auswählen
         
         return canvasView
     }
