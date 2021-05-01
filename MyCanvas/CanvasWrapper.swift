@@ -9,15 +9,25 @@ import SwiftUI
 import PencilKit
 
 struct CanvasWrapper: UIViewRepresentable {
-    var drawing : Drawing
-    let onSaved: (Data) -> Void
+    @Environment(\.managedObjectContext) private var viewContext
+    @FetchRequest(entity: Drawing.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Drawing.timestamp, ascending: true)], animation: .default) private var drawings: FetchedResults<Drawing>
+    var drawingId: UUID
     
     @State var canvasView = PKCanvasView()
     @State var toolPicker = PKToolPicker()
     
     func makeUIView(context: Context) -> PKCanvasView {
-        if let pkDrawing = try? PKDrawing(data: drawing.data ?? Data()) { canvasView.drawing = pkDrawing }
+        /// Bild laden
+        if let drawing = drawings.first(where: {$0.id == drawingId}) {
+            if let pkDrawing = try? PKDrawing(data: drawing.data ?? Data()) {
+                canvasView.drawing = pkDrawing
+            }
+        }
+        
+        /// Bild speichern
         canvasView.delegate = context.coordinator
+        
+        /// Tool Picker
         toolPicker.setVisible(true, forFirstResponder: canvasView)
         toolPicker.addObserver(canvasView)
         canvasView.becomeFirstResponder()
@@ -29,21 +39,31 @@ struct CanvasWrapper: UIViewRepresentable {
         
     }
     
+    /// Änderungen erkennen
     func makeCoordinator() -> Coordinator {
-        Coordinator(onSaved: onSaved, canvasView: $canvasView)
+        Coordinator(saveDrawing: saveDrawing, canvasView: $canvasView)
+    }
+    
+    /// Bild speichern
+    func saveDrawing(drawingData: Data) {
+        if let drawing = drawings.first(where: {$0.id == drawingId}) {
+            drawing.data = drawingData
+            PersistenceController.shared.save()
+        }
     }
 }
 
+/// Bild speichern
 class Coordinator: NSObject, PKCanvasViewDelegate {
-    let onSaved: (Data) -> Void
+    let saveDrawing: (Data) -> Void
     let canvasView: Binding<PKCanvasView>
     
-    init(onSaved: @escaping (Data) -> Void, canvasView: Binding<PKCanvasView>) {
-        self.onSaved = onSaved
+    init(saveDrawing: @escaping (Data) -> Void, canvasView: Binding<PKCanvasView>) {
+        self.saveDrawing = saveDrawing
         self.canvasView = canvasView
     }
     
     func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
-        onSaved(canvasView.drawing.dataRepresentation())
+        saveDrawing(canvasView.drawing.dataRepresentation())
     }
 }
