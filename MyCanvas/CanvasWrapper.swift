@@ -13,10 +13,14 @@ struct CanvasWrapper: UIViewRepresentable {
     let onSaved: (Data) -> Void
     
     @State var canvasView = PKCanvasView()
+    @State var toolPicker = PKToolPicker()
     
     func makeUIView(context: Context) -> PKCanvasView {
         if let pkDrawing = try? PKDrawing(data: drawing.data ?? Data()) { canvasView.drawing = pkDrawing }
         canvasView.delegate = context.coordinator
+        toolPicker.setVisible(true, forFirstResponder: canvasView)
+        toolPicker.addObserver(canvasView)
+        canvasView.becomeFirstResponder()
         
         return canvasView
     }
