@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F749E63263DCF300058EEF1 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F749E62263DCF300058EEF1 /* Preferences.swift */; };
 		3F82913D26179DF40062B168 /* CanvasWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F82913C26179DF40062B168 /* CanvasWrapper.swift */; };
 		3F8CDFA4260E96F400B0C413 /* MyCanvas.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3F8CDFA2260E96F400B0C413 /* MyCanvas.xcdatamodeld */; };
 		3F8CDFA9260E999400B0C413 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8CDFA8260E999400B0C413 /* Persistence.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3F749E62263DCF300058EEF1 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		3F82913C26179DF40062B168 /* CanvasWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasWrapper.swift; sourceTree = "<group>"; };
 		3F8CDFA3260E96F400B0C413 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		3F8CDFA8260E999400B0C413 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -64,6 +66,7 @@
 			children = (
 				3F8E0E6225F78E24002785FD /* MyCanvasApp.swift */,
 				3F8CDFA8260E999400B0C413 /* Persistence.swift */,
+				3F749E62263DCF300058EEF1 /* Preferences.swift */,
 				3F8E0E6425F78E24002785FD /* ContentView.swift */,
 				3F8E0E7225F7D674002785FD /* GalleryView.swift */,
 				3F8E0E7525F7D72A002785FD /* CanvasView.swift */,
@@ -159,6 +162,7 @@
 				3F8E0E7625F7D72A002785FD /* CanvasView.swift in Sources */,
 				3F8CDFA9260E999400B0C413 /* Persistence.swift in Sources */,
 				3F8CDFA4260E96F400B0C413 /* MyCanvas.xcdatamodeld in Sources */,
+				3F749E63263DCF300058EEF1 /* Preferences.swift in Sources */,
 				3F8E0E6325F78E24002785FD /* MyCanvasApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

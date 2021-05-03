@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
+    @ObservedObject var preferences = Preferences()
+    
     var body: some View {
         NavigationView {
             GalleryView()

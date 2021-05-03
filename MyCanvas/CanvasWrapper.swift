@@ -11,11 +11,17 @@ import PencilKit
 struct CanvasWrapper: UIViewRepresentable {
     @FetchRequest(entity: Drawing.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Drawing.timestamp, ascending: true)], animation: .default) private var drawings: FetchedResults<Drawing>
     var drawingId: UUID
+    @ObservedObject var preferences = Preferences()
     
     @State var canvasView = PKCanvasView()
-    @State var toolPicker = PKToolPicker()
+    //@State var toolPicker = PKToolPicker()
     
-    @Binding var selectedColor: Color
+    /// Stift auswählen
+    @Binding var inkColor: Color
+    @Binding var inkType: PKInkingTool.InkType
+    @Binding var eraser: PKEraserTool
+    @Binding var eraserOn: Bool
+    var ink: PKInkingTool { PKInkingTool(inkType, color: UIColor(inkColor)) }
     
     func makeUIView(context: Context) -> PKCanvasView {
         /// Bild laden
@@ -29,17 +35,27 @@ struct CanvasWrapper: UIViewRepresentable {
         canvasView.delegate = context.coordinator
         
         /// Tool Picker
-        toolPicker.setVisible(true, forFirstResponder: canvasView)
+        /*toolPicker.setVisible(true, forFirstResponder: canvasView)
         toolPicker.addObserver(canvasView)
-        canvasView.becomeFirstResponder()
+        canvasView.becomeFirstResponder()*/
+        
+        /// Interface Style
+        canvasView.overrideUserInterfaceStyle = preferences.darkMode ? .dark : .light
+        //toolPicker.overrideUserInterfaceStyle = preferences.darkMode ? .dark : .light
         
         /// Stift auswählen
+        canvasView.tool = eraserOn ? eraser : ink
         
         return canvasView
     }
     
     func updateUIView(_ uiView: PKCanvasView, context: Context) {
+        /// Interface Style
+        canvasView.overrideUserInterfaceStyle = preferences.darkMode ? .dark : .light
+        //toolPicker.overrideUserInterfaceStyle = preferences.darkMode ? .dark : .light
         
+        /// Stift auswählen
+        canvasView.tool = eraserOn ? eraser : ink
     }
     
     /// Änderungen erkennen
