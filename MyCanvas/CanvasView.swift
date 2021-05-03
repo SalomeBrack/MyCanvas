@@ -17,17 +17,20 @@ struct CanvasView: View {
     @ObservedObject var preferences = Preferences()
     
     /// Stift auswählen
-    @State var inkColor: Color = .blue
+    @State var inkColor: Color = .black
     @State var inkType: PKInkingTool.InkType = .pen
     @State var eraser: PKEraserTool = PKEraserTool(.bitmap)
     @State var eraserOn: Bool = false
     
-    @State var isPresented: Bool = false
+    @State var sheetIsPresented: Bool = false
     
     var body: some View {
         CanvasWrapper(drawingId: drawingId, inkColor: $inkColor, inkType: $inkType, eraser: $eraser, eraserOn: $eraserOn)
             .ignoresSafeArea()
-            .navigationBarItems(trailing: HStack(spacing: 30) {
+            .navigationBarItems(trailing: HStack(spacing: 25) {
+                /// Color Picker
+                ColorPicker(selection: $inkColor, supportsOpacity: true, label: { Text("Color") })
+                
                 /// Stift / Radierer auswählen
                 Menu {
                     Button(action: {
@@ -63,16 +66,19 @@ struct CanvasView: View {
                 } label: { Label("Tool", systemImage: "pencil.tip") }
                 
                 /// Settings
-                Button(action: { isPresented.toggle() }, label: { Label("Settings", systemImage: "circle") })
+                Button(action: { sheetIsPresented.toggle() }, label: { Label("Settings", systemImage: "circle") })
             })
             /// Settings
-            .sheet(isPresented: $isPresented) {
-                VStack(alignment: .leading, spacing: 20) {
+            .sheet(isPresented: $sheetIsPresented) {
+                VStack(spacing: 25) {
                     Toggle(isOn: $preferences.darkMode) { Text("Dark Mode") }
                     
-                    ColorPicker(selection: $inkColor, supportsOpacity: true, label: { Text("Color") })
-                }
-                .padding()
+                    /// Nur Input vom Apple Pencil
+                    if UIDevice.current.userInterfaceIdiom == .pad {
+                        Toggle(isOn: $preferences.pencilOnly) { Text("Pencil Only Mode") }
+                    }
+                    
+                }.padding()
             }
     }
 }

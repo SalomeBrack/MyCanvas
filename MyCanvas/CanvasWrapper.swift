@@ -34,6 +34,10 @@ struct CanvasWrapper: UIViewRepresentable {
         /// Bild speichern
         canvasView.delegate = context.coordinator
         
+        /// Nur Input vom Apple Pencil
+        if UIDevice.current.userInterfaceIdiom != .pad { canvasView.drawingPolicy = .anyInput }
+        else { canvasView.drawingPolicy = preferences.pencilOnly ? .pencilOnly : .anyInput }
+        
         /// Tool Picker
         /*toolPicker.setVisible(true, forFirstResponder: canvasView)
         toolPicker.addObserver(canvasView)
@@ -50,6 +54,10 @@ struct CanvasWrapper: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: PKCanvasView, context: Context) {
+        /// Nur Input vom Apple Pencil
+        if UIDevice.current.userInterfaceIdiom != .pad { canvasView.drawingPolicy = .anyInput }
+        else { canvasView.drawingPolicy = preferences.pencilOnly ? .pencilOnly : .anyInput }
+        
         /// Interface Style
         canvasView.overrideUserInterfaceStyle = preferences.darkMode ? .dark : .light
         //toolPicker.overrideUserInterfaceStyle = preferences.darkMode ? .dark : .light
