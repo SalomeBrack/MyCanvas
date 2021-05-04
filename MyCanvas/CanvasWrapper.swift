@@ -17,11 +17,13 @@ struct CanvasWrapper: UIViewRepresentable {
     //@State var toolPicker = PKToolPicker()
     
     /// Stift auswählen
-    @Binding var inkColor: Color
-    @Binding var inkType: PKInkingTool.InkType
+    @Binding var inkingTool: PKInkingTool.InkType
+    @Binding var color: Color
+    @Binding var width: CGFloat
+    @Binding var opacity: Double
     @Binding var eraser: PKEraserTool
-    @Binding var eraserOn: Bool
-    var ink: PKInkingTool { PKInkingTool(inkType, color: UIColor(inkColor)) }
+    @Binding var erasing: Bool
+    var ink: PKInkingTool { PKInkingTool(inkingTool, color: UIColor(color.opacity(opacity)), width: width) }
     
     func makeUIView(context: Context) -> PKCanvasView {
         /// Bild laden
@@ -48,7 +50,7 @@ struct CanvasWrapper: UIViewRepresentable {
         //toolPicker.overrideUserInterfaceStyle = preferences.darkMode ? .dark : .light
         
         /// Stift auswählen
-        canvasView.tool = eraserOn ? eraser : ink
+        canvasView.tool = erasing ? eraser : ink
         
         return canvasView
     }
@@ -63,7 +65,7 @@ struct CanvasWrapper: UIViewRepresentable {
         //toolPicker.overrideUserInterfaceStyle = preferences.darkMode ? .dark : .light
         
         /// Stift auswählen
-        canvasView.tool = eraserOn ? eraser : ink
+        canvasView.tool = erasing ? eraser : ink
     }
     
     /// Änderungen erkennen
