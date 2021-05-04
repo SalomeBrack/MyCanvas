@@ -13,8 +13,8 @@ struct CanvasWrapper: UIViewRepresentable {
     var drawingId: UUID
     @ObservedObject var preferences = Preferences()
     
-    @State var canvasView = PKCanvasView()
-    //@State var toolPicker = PKToolPicker()
+    @Binding var canvasView: PKCanvasView
+    //@Binding var toolPicker: PKToolPicker
     
     /// Stift auswählen
     @Binding var inkingTool: PKInkingTool.InkType
@@ -96,3 +96,9 @@ class Coordinator: NSObject, PKCanvasViewDelegate {
         saveDrawing(canvasView.drawing.dataRepresentation())
     }
 }
+
+
+/*
+ /// Verhindert, dass man etwas malen kann
+ canvasView.drawingGestureRecognizer.isEnabled = false
+*/
