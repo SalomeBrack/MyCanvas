@@ -13,7 +13,7 @@ struct CanvasWrapper: UIViewRepresentable {
     var drawingId: UUID
     @ObservedObject var preferences = Preferences()
     
-    @Binding var canvasView: PKCanvasView
+    @State var canvasView: PKCanvasView = PKCanvasView()
     //@Binding var toolPicker: PKToolPicker
     
     /// Stift auswählen

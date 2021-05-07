@@ -18,7 +18,7 @@ struct CanvasView: View {
     @State var sheetIsPresented: Bool = false
     @State var alertIsPresented: Bool = false
     
-    @State var canvasView = PKCanvasView()
+    //@State var canvasView = PKCanvasView()
     //@State var toolPicker = PKToolPicker()
 
     /// Stift Eigenschaften
@@ -44,7 +44,7 @@ struct CanvasView: View {
                 Slider(value: $opacity, in: 0.01...1).padding()
             }
         
-            CanvasWrapper(drawingId: drawingId, canvasView: $canvasView, inkingTool: $inkingTool, color: $color, width: $width, opacity: $opacity, eraser: $eraser, erasing: $erasing)
+            CanvasWrapper(drawingId: drawingId, /*canvasView: $canvasView,*/ inkingTool: $inkingTool, color: $color, width: $width, opacity: $opacity, eraser: $eraser, erasing: $erasing)
                 
             .ignoresSafeArea()
             .navigationBarItems(trailing: HStack(spacing: 25) {
@@ -59,31 +59,31 @@ struct CanvasView: View {
                 /// Stift / Radierer auswählen
                 Menu {
                     Button(action: {
-                        canvasView.tool = PKInkingTool(.pen)
+                        //canvasView.tool = PKInkingTool(.pen)
                         inkingTool = .pen
                         erasing = false
                     }, label: { Label("Pen", systemImage: inkingTool == .pen && !erasing ? "pencil" : "") })
                     
                     Button(action: {
-                        canvasView.tool = PKInkingTool(.marker)
+                        //canvasView.tool = PKInkingTool(.marker)
                         inkingTool = .marker
                         erasing = false
                     }, label: { Label("Marker", systemImage: inkingTool == .marker && !erasing ? "pencil" : "") })
                     
                     Button(action: {
-                        canvasView.tool = PKInkingTool(.pencil)
+                        //canvasView.tool = PKInkingTool(.pencil)
                         inkingTool = .pencil
                         erasing = false
                     }, label: { Label("Pencil", systemImage: inkingTool == .pencil && !erasing ? "pencil" : "") })
                     
                     Button(action: {
-                        canvasView.tool = PKEraserTool(.bitmap)
+                        //canvasView.tool = PKEraserTool(.bitmap)
                         eraser = PKEraserTool(.bitmap)
                         erasing = true
                     }, label: { Label("Bitmap Eraser", systemImage: eraser == PKEraserTool(.bitmap) && erasing ? "pencil.slash" : "") })
                     
                     Button(action: {
-                        canvasView.tool = PKEraserTool(.vector)
+                        //canvasView.tool = PKEraserTool(.vector)
                         eraser = PKEraserTool(.vector)
                         erasing = true
                     }, label: { Label("Vector Eraser", systemImage: eraser == PKEraserTool(.vector) && erasing ? "pencil.slash" : "") })
@@ -109,7 +109,7 @@ struct CanvasView: View {
                 title: Text("Delete Everything?"),
                 message: Text("This action is undoable"),
                 primaryButton: .destructive(Text("Clear")) {
-                    canvasView.drawing = PKDrawing()
+                    //canvasView.drawing = PKDrawing()
                     undoManager?.removeAllActions()
                 }, secondaryButton: .cancel()
             )}
