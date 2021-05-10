@@ -23,7 +23,14 @@ struct CanvasWrapper: UIViewRepresentable {
     @Binding var opacity: Double
     @Binding var eraser: PKEraserTool
     @Binding var erasing: Bool
-    var ink: PKInkingTool { PKInkingTool(inkingTool, color: UIColor(color.opacity(opacity)), width: width) }
+    var ink: PKInkingTool { PKInkingTool(inkingTool, color: UIColor(hueColor), width: width) }
+    
+    
+    @Binding var hue: Double
+    @Binding var saturation: Double
+    @Binding var brightness: Double
+
+    var hueColor: Color { Color.init(hue: hue/360, saturation: saturation, brightness: brightness) }
     
     func makeUIView(context: Context) -> PKCanvasView {
         /// Bild laden

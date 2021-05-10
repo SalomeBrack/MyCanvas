@@ -24,37 +24,62 @@ struct CanvasView: View {
     /// Stift Eigenschaften
     @State var color: Color = .black
     @State var inkingTool: PKInkingTool.InkType = .pen
-    @State var width: CGFloat = 5
+    @State var width: CGFloat = 25
     @State var opacity: Double = 1
     @State var eraser: PKEraserTool = PKEraserTool(.vector)
     @State var erasing: Bool = false
 
     let pencilInteraction = UIPencilInteraction()
     
+    @State var hue: Double = 0
+    @State var saturation: Double = 0
+    @State var brightness: Double = 0
+    var hueColor: Color { Color.init(hue: hue/360, saturation: saturation, brightness: brightness, opacity: opacity) }
+    
     var body: some View {
         VStack {
             HStack {
-                Text("Size:").frame(minWidth: 80, alignment: .trailing)
-                Text("\(width, specifier: "%.1f") P").frame(minWidth: 50, alignment: .leading)
+                Text("Size:").frame(minWidth: 90, alignment: .trailing)
+                Text("\(width, specifier: "%.0f")").frame(minWidth: 40, alignment: .leading)
                 Slider(value: $width, in: 0.1...25).padding()
             }
             HStack {
-                Text("Opacity:").frame(minWidth: 80, alignment: .trailing)
-                Text("\(opacity * 100, specifier: "%.0f") %").frame(minWidth: 50, alignment: .leading)
+                Text("Opacity:").frame(minWidth: 90, alignment: .trailing)
+                Text("\(opacity * 100, specifier: "%.0f")").frame(minWidth: 40, alignment: .leading)
                 Slider(value: $opacity, in: 0.01...1).padding()
             }
-        
-            CanvasWrapper(drawingId: drawingId, /*canvasView: $canvasView,*/ inkingTool: $inkingTool, color: $color, width: $width, opacity: $opacity, eraser: $eraser, erasing: $erasing)
+            HStack {
+                Text("Hue:").frame(minWidth: 90, alignment: .trailing)
+                Text("\(hue, specifier: "%.0f")").frame(minWidth: 40, alignment: .leading)
+                Slider(value: $hue, in: 0...360).padding()
+            }
+            HStack {
+                Text("Saturation:").frame(minWidth: 90, alignment: .trailing)
+                Text("\(saturation * 100, specifier: "%.0f")").frame(minWidth: 40, alignment: .leading)
+                Slider(value: $saturation, in: 0...1).padding()
+            }
+            HStack {
+                Text("Brightness:").frame(minWidth: 90, alignment: .trailing)
+                Text("\(brightness * 100, specifier: "%.0f")").frame(minWidth: 40, alignment: .leading)
+                Slider(value: $brightness, in: 0...1).padding()
+            }
+            
+            
+            
+            CanvasWrapper(drawingId: drawingId, /*canvasView: $canvasView,*/ inkingTool: $inkingTool, color: $color, width: $width, opacity: $opacity, eraser: $eraser, erasing: $erasing, hue: $hue, saturation: $saturation, brightness: $brightness)
                 
             .ignoresSafeArea()
             .navigationBarItems(trailing: HStack(spacing: 25) {
+                Toggle(isOn: $preferences.darkMode) { Text("Dark Mode") }
+                
                 /// Rückgängig, Wiederholen und Löschen
                 Button(action: { undoManager?.undo() }, label: { Text("Undo") }).disabled(undoManager?.canUndo == false)
                 Button(action: { undoManager?.redo() }, label: { Text("Redo") }).disabled(undoManager?.canRedo == false)
                 Button(action: { alertIsPresented = true }, label: { Text("Clear") })
                 
                 /// Color Picker
-                ColorPicker(selection: $color, supportsOpacity: false, label: { Text("Color") })
+                //ColorPicker(selection: $color, supportsOpacity: false, label: { Text("Color") })
+                Text("Color").foregroundColor(hueColor)
                 
                 /// Stift / Radierer auswählen
                 Menu {
