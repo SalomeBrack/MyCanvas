@@ -19,14 +19,20 @@ struct ColorView: View {
             HStack {
                 Spacer()
                 RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .strokeBorder(Color.primary, lineWidth: 5)
+                    .strokeBorder(Color.primary.opacity(0.4), lineWidth: 2)
                     .frame(width: 150, height: 150)
                     .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(color))
                     .padding()
                 Spacer()
             }
             
-            Text("Hue").padding()
+            Text("")
+            
+            HStack {
+                Text("Hue:")
+                Spacer()
+                Text("\(hsb[0] * 360, specifier: "%.0f")")
+            }.padding()
             ZStack {
                 RoundedRectangle(cornerRadius: 6, style: .continuous)
                     .fill(LinearGradient(
@@ -45,7 +51,11 @@ struct ColorView: View {
                 ColorSlider(thumbColor: UIColor(color), value: $hsb[0])
             }.padding()
             
-            Text("Saturation").padding()
+            HStack {
+                Text("Saturation:")
+                Spacer()
+                Text("\(hsb[1] * 100, specifier: "%.0f")")
+            }.padding()
             ZStack {
                 RoundedRectangle(cornerRadius: 6, style: .continuous)
                     .fill(LinearGradient(
@@ -56,7 +66,11 @@ struct ColorView: View {
                 ColorSlider(thumbColor: UIColor(color), value: $hsb[1])
             }.padding()
             
-            Text("Brightness").padding()
+            HStack {
+                Text("Brightness:")
+                Spacer()
+                Text("\(hsb[2] * 100, specifier: "%.0f")")
+            }.padding()
             ZStack {
                 RoundedRectangle(cornerRadius: 6, style: .continuous)
                     .fill(LinearGradient(

@@ -15,6 +15,7 @@ struct CanvasView: View {
     @ObservedObject var preferences = Preferences()
     
     @State var activeSheet: ActiveSheet?
+    @State var activeTool: ActiveTool = .ink
     @State var sheetIsPresented: Bool = false
     @State var alertIsPresented: Bool = false
     
@@ -23,11 +24,8 @@ struct CanvasView: View {
 
     /// Stift Eigenschaften
     @State var inkingTool: PKInkingTool.InkType = .pen
-    @State var eraserTool: PKEraserTool = PKEraserTool(.vector)
-    @State var lassoTool: PKLassoTool = PKLassoTool()
     
-    @State var eraserOn: Bool = false
-    @State var lassoOn: Bool = false
+    @State var rulerActive: Bool = false
     
     @State var toolWidth: CGFloat = 25
     @State var toolOpacity: Double = 1
@@ -39,62 +37,32 @@ struct CanvasView: View {
         VStack {
             HStack(spacing: 20) {
                 /// Stift / Radierer auswählen
-                Button(action: { eraserOn = false }, label: { Text("Tool").accentColor(eraserOn ? .primary : .accentColor) })
-                .contextMenu {
-                    Button(action: {
-                        inkingTool = .pen
-                        eraserOn = false
-                    }, label: { Label("Pen", systemImage: inkingTool == .pen ? "pencil" : "") })
-                    
-                    Button(action: {
-                        inkingTool = .marker
-                        eraserOn = false
-                    }, label: { Label("Marker", systemImage: inkingTool == .marker ? "pencil" : "") })
-                    
-                    Button(action: {
-                        inkingTool = .pencil
-                        eraserOn = false
-                    }, label: { Label("Pencil", systemImage: inkingTool == .pencil ? "pencil" : "") })
-                }
+                Button(action: { activeTool = .ink }, label: { Text("Brush").fontWeight(activeTool == .ink  ? .bold : .none) })
                 
-                Button(action: { eraserOn = true }, label: { Text("Eraser").accentColor(eraserOn ? .accentColor : .primary) })
-                .contextMenu {
-                    Button(action: {
-                        eraserTool = PKEraserTool(.bitmap)
-                        eraserOn = true
-                    }, label: { Label("Bitmap Eraser", systemImage: eraserTool == PKEraserTool(.bitmap) ? "pencil.slash" : "") })
-                    
-                    Button(action: {
-                        eraserTool = PKEraserTool(.vector)
-                        eraserOn = true
-                    }, label: { Label("Vector Eraser", systemImage: eraserTool == PKEraserTool(.vector) ? "pencil.slash" : "") })
-                }
+                Button(action: { activeTool = .eraser }, label: { Text("Eraser").fontWeight(activeTool == .eraser ? .bold : .none) })
+                
+                Button(action: { activeTool = .lasso }, label: { Text("Lasso").fontWeight(activeTool == .lasso ? .bold : .none) })
+                
+                Button(action: { rulerActive.toggle() }, label: { Text("Ruler").fontWeight(rulerActive ? .bold : .none) })
             
                 Spacer()
-            
+                
+                /// Tool Einstellungen
+                Button(action: { activeSheet = .properties }, label: { Text("Properties").bold() })
+                
                 /// Color Picker
-                RoundedRectangle(cornerRadius: 6, style: .continuous)
-                    .strokeBorder(Color.primary, lineWidth: 2)
-                    .frame(width: 40, height: 40)
-                    .background(RoundedRectangle(cornerRadius: 6, style: .continuous)
-                                    .fill(Color.init(hue: hsb[0], saturation: hsb[1], brightness: hsb[2])))
-                    .onTapGesture { activeSheet = .color }
+                Button(action: { activeSheet = .color }, label: {
+                    Text("Color").bold()
+                    RoundedRectangle(cornerRadius: 6, style: .continuous)
+                        .strokeBorder(Color.primary.opacity(0.4), lineWidth: 2)
+                        .frame(width: 35, height: 35)
+                        .background(RoundedRectangle(cornerRadius: 6, style: .continuous).fill(Color.init(hue: hsb[0], saturation: hsb[1], brightness: hsb[2])))
+                })
                 //ColorPicker(selection: $color, supportsOpacity: false, label: { Text("Color") })
-            }
-            .padding()
+                
+            }.padding()
             
-            HStack {
-                Text("Size:").frame(minWidth: 90, alignment: .trailing)
-                Text("\(toolWidth, specifier: "%.0f")").frame(minWidth: 40, alignment: .leading)
-                Slider(value: $toolWidth, in: 0.1...25).padding()
-            }
-            HStack {
-                Text("Opacity:").frame(minWidth: 90, alignment: .trailing)
-                Text("\(toolOpacity * 100, specifier: "%.0f")").frame(minWidth: 40, alignment: .leading)
-                Slider(value: $toolOpacity, in: 0.01...1).padding()
-            }
-            
-            CanvasWrapper(drawingId: drawingId, canvasView: $canvasView, inkType: $inkingTool, eraserTool: $eraserTool, lassoTool: $lassoTool, eraserOn: $eraserOn, lassoOn: $lassoOn, toolWidth: $toolWidth, toolOpacity: $toolOpacity, hsb: $hsb).ignoresSafeArea()
+            CanvasWrapper(drawingId: drawingId, canvasView: $canvasView, activeTool: $activeTool, inkType: $inkingTool, rulerActive: $rulerActive, toolWidth: $toolWidth, toolOpacity: $toolOpacity, hsb: $hsb).ignoresSafeArea()
             
             .navigationBarItems(
                 leading: HStack(spacing: 25) { Text("")
@@ -122,7 +90,13 @@ struct CanvasView: View {
                         if UIDevice.current.userInterfaceIdiom == .pad
                         { Toggle(isOn: $preferences.pencilOnly) { Text("Pencil Only Mode") } }
                         
+                        Toggle(isOn: $preferences.vectorEraser) { Text("Vector Eraser") }
+                        
                     }.padding()
+                    
+                /// Stift Eigenschaften
+                case .properties:
+                    PropertiesView(inkingTool: $inkingTool, toolWidth: $toolWidth, toolOpacity: $toolOpacity)
                     
                 /// Farbe wählen
                 case .color:
@@ -141,13 +115,18 @@ struct CanvasView: View {
             )}
             
             /// Bei Doppeltippen auf Canvas
-            .onTapGesture(count: 2, perform: { eraserOn.toggle() })
+            //.onTapGesture(count: 2, perform: { eraserActive.toggle() })
         }
     }
 }
 
 enum ActiveSheet: Identifiable {
-    case settings, color
+    case settings, properties, color
+    var id: Int { hashValue }
+}
+
+enum ActiveTool: Identifiable {
+    case ink, eraser, lasso
     var id: Int { hashValue }
 }
 

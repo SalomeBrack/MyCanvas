@@ -17,16 +17,16 @@ struct CanvasWrapper: UIViewRepresentable {
     //@Binding var toolPicker: PKToolPicker
     
     /// Stift auswählen
+    @Binding var activeTool: ActiveTool
     @Binding var inkType: PKInkingTool.InkType
-    @Binding var eraserTool: PKEraserTool
-    @Binding var lassoTool: PKLassoTool
-    
-    @Binding var eraserOn: Bool
-    @Binding var lassoOn: Bool
+    @Binding var rulerActive: Bool
     
     @Binding var toolWidth: CGFloat
     @Binding var toolOpacity: Double
     @Binding var hsb: [Double]
+    
+    var lassoTool: PKLassoTool = PKLassoTool()
+    var eraserTool: PKEraserTool { preferences.vectorEraser ? PKEraserTool(.vector) : PKEraserTool(.bitmap) }
     
     var inkColor: Color { Color.init(hue: hsb[0], saturation: hsb[1], brightness: hsb[2], opacity: toolOpacity) }
     var inkingTool: PKInkingTool { PKInkingTool(inkType, color: UIColor(inkColor), width: toolWidth) }
@@ -56,7 +56,12 @@ struct CanvasWrapper: UIViewRepresentable {
         //toolPicker.overrideUserInterfaceStyle = preferences.darkMode ? .dark : .light
         
         /// Stift auswählen
-        canvasView.tool = eraserOn ? eraserTool : inkingTool
+        switch activeTool {
+        case .ink: canvasView.tool = inkingTool
+        case .eraser: canvasView.tool = eraserTool
+        case .lasso: canvasView.tool = lassoTool
+        }
+        canvasView.isRulerActive = rulerActive
         
         return canvasView
     }
@@ -71,7 +76,12 @@ struct CanvasWrapper: UIViewRepresentable {
         //toolPicker.overrideUserInterfaceStyle = preferences.darkMode ? .dark : .light
         
         /// Stift auswählen
-        canvasView.tool = eraserOn ? eraserTool : inkingTool
+        switch activeTool {
+        case .ink: canvasView.tool = inkingTool
+        case .eraser: canvasView.tool = eraserTool
+        case .lasso: canvasView.tool = lassoTool
+        }
+        canvasView.isRulerActive = rulerActive
     }
     
     /// Änderungen erkennen

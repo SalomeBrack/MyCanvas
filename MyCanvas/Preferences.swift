@@ -14,4 +14,7 @@ class Preferences: ObservableObject {
     @Published var pencilOnly: Bool = UserDefaults.standard.bool(forKey: "pencilOnly") {
         didSet { UserDefaults.standard.set(self.pencilOnly, forKey: "pencilOnly") }
     }
+    @Published var vectorEraser: Bool = UserDefaults.standard.bool(forKey: "vectorEraser") {
+        didSet { UserDefaults.standard.set(self.vectorEraser, forKey: "vectorEraser") }
+    }
 }
