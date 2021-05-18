@@ -13,24 +13,23 @@ struct CanvasWrapper: UIViewRepresentable {
     var drawingId: UUID
     @ObservedObject var preferences = Preferences()
     
-    @State var canvasView: PKCanvasView = PKCanvasView()
+    @Binding var canvasView: PKCanvasView
     //@Binding var toolPicker: PKToolPicker
     
     /// Stift auswählen
-    @Binding var inkingTool: PKInkingTool.InkType
-    @Binding var color: Color
-    @Binding var width: CGFloat
-    @Binding var opacity: Double
-    @Binding var eraser: PKEraserTool
-    @Binding var erasing: Bool
-    var ink: PKInkingTool { PKInkingTool(inkingTool, color: UIColor(hueColor), width: width) }
+    @Binding var inkType: PKInkingTool.InkType
+    @Binding var eraserTool: PKEraserTool
+    @Binding var lassoTool: PKLassoTool
     
+    @Binding var eraserOn: Bool
+    @Binding var lassoOn: Bool
     
-    @Binding var hue: Double
-    @Binding var saturation: Double
-    @Binding var brightness: Double
-
-    var hueColor: Color { Color.init(hue: hue/360, saturation: saturation, brightness: brightness) }
+    @Binding var toolWidth: CGFloat
+    @Binding var toolOpacity: Double
+    @Binding var hsb: [Double]
+    
+    var inkColor: Color { Color.init(hue: hsb[0], saturation: hsb[1], brightness: hsb[2], opacity: toolOpacity) }
+    var inkingTool: PKInkingTool { PKInkingTool(inkType, color: UIColor(inkColor), width: toolWidth) }
     
     func makeUIView(context: Context) -> PKCanvasView {
         /// Bild laden
@@ -57,7 +56,7 @@ struct CanvasWrapper: UIViewRepresentable {
         //toolPicker.overrideUserInterfaceStyle = preferences.darkMode ? .dark : .light
         
         /// Stift auswählen
-        canvasView.tool = erasing ? eraser : ink
+        canvasView.tool = eraserOn ? eraserTool : inkingTool
         
         return canvasView
     }
@@ -72,7 +71,7 @@ struct CanvasWrapper: UIViewRepresentable {
         //toolPicker.overrideUserInterfaceStyle = preferences.darkMode ? .dark : .light
         
         /// Stift auswählen
-        canvasView.tool = erasing ? eraser : ink
+        canvasView.tool = eraserOn ? eraserTool : inkingTool
     }
     
     /// Änderungen erkennen
