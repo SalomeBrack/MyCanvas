@@ -11,9 +11,6 @@ struct ColorView: View {
     @Binding var hsb: [Double]
     var color: Color { Color.init(hue: hsb[0], saturation: hsb[1], brightness: hsb[2]) }
     
-    
-      @State var sliderValue: Double = 0.5
-    
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             HStack {
@@ -22,7 +19,6 @@ struct ColorView: View {
                     .strokeBorder(Color.primary.opacity(0.4), lineWidth: 2)
                     .frame(width: 150, height: 150)
                     .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(color))
-                    .padding()
                 Spacer()
             }
             
@@ -32,7 +28,7 @@ struct ColorView: View {
                 Text("Hue:")
                 Spacer()
                 Text("\(hsb[0] * 360, specifier: "%.0f")")
-            }.padding()
+            }
             ZStack {
                 RoundedRectangle(cornerRadius: 6, style: .continuous)
                     .fill(LinearGradient(
@@ -49,13 +45,13 @@ struct ColorView: View {
                         endPoint: .trailing
                     )).frame(maxHeight: 15).padding()
                 ColorSlider(thumbColor: UIColor(color), value: $hsb[0])
-            }.padding()
+            }
             
             HStack {
                 Text("Saturation:")
                 Spacer()
                 Text("\(hsb[1] * 100, specifier: "%.0f")")
-            }.padding()
+            }
             ZStack {
                 RoundedRectangle(cornerRadius: 6, style: .continuous)
                     .fill(LinearGradient(
@@ -64,13 +60,13 @@ struct ColorView: View {
                         endPoint: .trailing
                     )).frame(maxHeight: 15).padding()
                 ColorSlider(thumbColor: UIColor(color), value: $hsb[1])
-            }.padding()
+            }
             
             HStack {
                 Text("Brightness:")
                 Spacer()
                 Text("\(hsb[2] * 100, specifier: "%.0f")")
-            }.padding()
+            }
             ZStack {
                 RoundedRectangle(cornerRadius: 6, style: .continuous)
                     .fill(LinearGradient(
@@ -79,25 +75,26 @@ struct ColorView: View {
                         endPoint: .trailing
                     )).frame(maxHeight: 15).padding()
                 ColorSlider(thumbColor: UIColor(color), value: $hsb[2])
-            }.padding()
+            }
             
-        /*HStack {
-            Text("Hue:").frame(minWidth: 90, alignment: .trailing)
-            Text("\(hsb[0] * 360, specifier: "%.0f")").frame(minWidth: 30, alignment: .leading)
-            Slider(value: $hsb[0], in: 0...1).padding()
+            /*
+            HStack {
+                Text("Hue:").frame(minWidth: 90, alignment: .trailing)
+                Text("\(hsb[0] * 360, specifier: "%.0f")").frame(minWidth: 30, alignment: .leading)
+                Slider(value: $hsb[0], in: 0...1).padding()
+            }
+            HStack {
+                Text("Saturation:").frame(minWidth: 90, alignment: .trailing)
+                Text("\(hsb[1] * 100, specifier: "%.0f")").frame(minWidth: 30, alignment: .leading)
+                Slider(value: $hsb[1], in: 0...1).padding()
+            }
+            HStack {
+                Text("Brightness:").frame(minWidth: 90, alignment: .trailing)
+                Text("\(hsb[2] * 100, specifier: "%.0f")").frame(minWidth: 30, alignment: .leading)
+                Slider(value: $hsb[2], in: 0...1).padding()
+            }
+            */
         }
-        HStack {
-            Text("Saturation:").frame(minWidth: 90, alignment: .trailing)
-            Text("\(hsb[1] * 100, specifier: "%.0f")").frame(minWidth: 30, alignment: .leading)
-            Slider(value: $hsb[1], in: 0...1).padding()
-        }
-        HStack {
-            Text("Brightness:").frame(minWidth: 90, alignment: .trailing)
-            Text("\(hsb[2] * 100, specifier: "%.0f")").frame(minWidth: 30, alignment: .leading)
-            Slider(value: $hsb[2], in: 0...1).padding()
-        }*/
-            
-        }.padding()
     }
 }
 

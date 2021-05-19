@@ -1,5 +1,5 @@
 //
-//  CanvasViewRepresentable.swift
+//  CanvasWrapper.swift
 //  MyCanvas
 //
 //  Created by Student on 02.04.21.
@@ -21,7 +21,7 @@ struct CanvasWrapper: UIViewRepresentable {
     @Binding var inkType: PKInkingTool.InkType
     @Binding var rulerActive: Bool
     
-    @Binding var toolWidth: CGFloat
+    @Binding var toolWidth: Double
     @Binding var toolOpacity: Double
     @Binding var hsb: [Double]
     
@@ -29,7 +29,7 @@ struct CanvasWrapper: UIViewRepresentable {
     var eraserTool: PKEraserTool { preferences.vectorEraser ? PKEraserTool(.vector) : PKEraserTool(.bitmap) }
     
     var inkColor: Color { Color.init(hue: hsb[0], saturation: hsb[1], brightness: hsb[2], opacity: toolOpacity) }
-    var inkingTool: PKInkingTool { PKInkingTool(inkType, color: UIColor(inkColor), width: toolWidth) }
+    var inkingTool: PKInkingTool { PKInkingTool(inkType, color: UIColor(inkColor), width: CGFloat(toolWidth)) }
     
     func makeUIView(context: Context) -> PKCanvasView {
         /// Bild laden
@@ -63,6 +63,10 @@ struct CanvasWrapper: UIViewRepresentable {
         }
         canvasView.isRulerActive = rulerActive
         
+        /// Zoomen
+        canvasView.minimumZoomScale = 1
+        canvasView.maximumZoomScale = 2
+        
         return canvasView
     }
     
@@ -95,6 +99,12 @@ struct CanvasWrapper: UIViewRepresentable {
             drawing.data = drawingData
             PersistenceController.shared.save()
         }
+        
+        /// Tool Einstellungen speichern
+        UserDefaults.standard.set([hsb[0], hsb[1], hsb[2], toolOpacity, toolWidth,
+                                   inkType == .pencil ? 2 : inkType == .marker ? 1 : 0,
+                                   activeTool == .lasso ? 2 : activeTool == .eraser ? 1 : 0
+        ], forKey: "toolSettings")
     }
 }
 

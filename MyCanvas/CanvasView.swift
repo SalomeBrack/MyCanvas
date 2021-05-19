@@ -10,9 +10,9 @@ import SwiftUI
 import PencilKit
 
 struct CanvasView: View {
+    @ObservedObject var preferences = Preferences()
     @Environment(\.undoManager) private var undoManager
     var drawingId: UUID
-    @ObservedObject var preferences = Preferences()
     
     @State var activeSheet: ActiveSheet?
     @State var activeTool: ActiveTool = .ink
@@ -24,25 +24,19 @@ struct CanvasView: View {
 
     /// Stift Eigenschaften
     @State var inkingTool: PKInkingTool.InkType = .pen
-    
     @State var rulerActive: Bool = false
-    
-    @State var toolWidth: CGFloat = 25
+    @State var toolWidth: Double = 25
     @State var toolOpacity: Double = 1
     @State var hsb: [Double] = [0, 0, 0]
 
     let pencilInteraction = UIPencilInteraction()
-    
     var body: some View {
         VStack {
             HStack(spacing: 20) {
                 /// Stift / Radierer auswählen
                 Button(action: { activeTool = .ink }, label: { Text("Brush").fontWeight(activeTool == .ink  ? .bold : .none) })
-                
                 Button(action: { activeTool = .eraser }, label: { Text("Eraser").fontWeight(activeTool == .eraser ? .bold : .none) })
-                
                 Button(action: { activeTool = .lasso }, label: { Text("Lasso").fontWeight(activeTool == .lasso ? .bold : .none) })
-                
                 Button(action: { rulerActive.toggle() }, label: { Text("Ruler").fontWeight(rulerActive ? .bold : .none) })
             
                 Spacer()
@@ -70,7 +64,6 @@ struct CanvasView: View {
                     Button(action: { undoManager?.undo() }, label: { Text("Undo") }).disabled(undoManager?.canUndo == false)
                     Button(action: { undoManager?.redo() }, label: { Text("Redo") }).disabled(undoManager?.canRedo == false)
                     Button(action: { alertIsPresented = true }, label: { Text("Clear") })
-                    
                 },
                 
                 trailing: HStack(spacing: 25) {
@@ -78,30 +71,31 @@ struct CanvasView: View {
                     Button(action: { activeSheet = .settings }, label: { Text("Settings") })
                 }
             )
-            
             .sheet(item: $activeSheet) { item in
-                switch item {
-                
-                /// Einstellungen
-                case .settings:
-                    VStack(spacing: 25) {
-                        Toggle(isOn: $preferences.darkMode) { Text("Dark Mode") }
-                        
-                        if UIDevice.current.userInterfaceIdiom == .pad
-                        { Toggle(isOn: $preferences.pencilOnly) { Text("Pencil Only Mode") } }
-                        
-                        Toggle(isOn: $preferences.vectorEraser) { Text("Vector Eraser") }
-                        
-                    }.padding()
+                VStack {
+                    switch item {
                     
-                /// Stift Eigenschaften
-                case .properties:
-                    PropertiesView(inkingTool: $inkingTool, toolWidth: $toolWidth, toolOpacity: $toolOpacity)
+                    /// Einstellungen
+                    case .settings:
+                        VStack(spacing: 25) {
+                            Toggle(isOn: $preferences.darkMode) { Text("Dark Mode") }
+                            Toggle(isOn: $preferences.pencilOnly) { Text("Pencil Only Mode") }
+                            Toggle(isOn: $preferences.vectorEraser) { Text("Vector Eraser") }
+                        }
+                        
+                    /// Stift Eigenschaften
+                    case .properties:
+                        PropertiesView(inkingTool: $inkingTool, toolWidth: $toolWidth, toolOpacity: $toolOpacity)
+                        
+                    /// Farbe wählen
+                    case .color:
+                        ColorView(hsb: $hsb)
+                    }
                     
-                /// Farbe wählen
-                case .color:
-                    ColorView(hsb: $hsb)
-                }
+                    Spacer()
+                    
+                    Button(action: { activeSheet = .none }, label: { Text("Done") }).padding()
+                }.padding().padding()
             }
                 
             /// Alles löschen, Alert Fenster
@@ -116,6 +110,14 @@ struct CanvasView: View {
             
             /// Bei Doppeltippen auf Canvas
             //.onTapGesture(count: 2, perform: { eraserActive.toggle() })
+        }
+        .onAppear {
+            /// Tool Settings laden
+            hsb = [preferences.toolSettings?[0] ?? 0, preferences.toolSettings?[1] ?? 0, preferences.toolSettings?[2] ?? 0]
+            toolOpacity = preferences.toolSettings?[3] ?? 1
+            toolWidth = preferences.toolSettings?[4] ?? 25
+            inkingTool = preferences.toolSettings?[5] ?? 0 == 2 ? .pencil : preferences.toolSettings?[5] ?? 0 == 1 ? .marker : .pen
+            activeTool = preferences.toolSettings?[6] ?? 0 == 2 ? .lasso : preferences.toolSettings?[6] ?? 0 == 1 ? .eraser : .ink
         }
     }
 }
