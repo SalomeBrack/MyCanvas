@@ -14,6 +14,7 @@ struct ContentView: View {
         NavigationView {
             GalleryView()
                 .navigationBarTitleDisplayMode(.inline)
+                .statusBar(hidden: true)
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }

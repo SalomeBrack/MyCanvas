@@ -47,13 +47,13 @@ struct CanvasView: View {
                 /// Color Picker
                 Button(action: { activeSheet = .color }, label: {
                     Text("Color").bold()
-                    RoundedRectangle(cornerRadius: 6, style: .continuous)
-                        .strokeBorder(Color.primary.opacity(0.4), lineWidth: 2)
+                    RoundedRectangle(cornerRadius: 6)
+                        .strokeBorder(Color("AccentColorSubtitle"), lineWidth: 3)
                         .frame(width: 35, height: 35)
                         .background(RoundedRectangle(cornerRadius: 6, style: .continuous).fill(selectedColor))
                 })
                 //ColorPicker(selection: $color, supportsOpacity: false, label: { Text("Color") })
-            }.padding()
+            }.padding().foregroundColor(Color("AccentColorSubtitle"))
             
             /// Canvas
             CanvasWrapper(drawingId: drawingId, canvasView: $canvasView, activeTool: $activeTool, inkType: $inkingTool, rulerActive: $rulerActive, toolWidth: $toolWidth, toolOpacity: $toolOpacity, hsb: $hsb)
@@ -77,7 +77,12 @@ struct CanvasView: View {
                 VStack {
                     switch item {
                     case .settings:
-                        SettingsView()
+                        VStack(spacing: 25) {
+                            Toggle(isOn: $preferences.darkMode) { Text("Dark Mode") }
+                            //if UIDevice.current.userInterfaceIdiom == .pad {}
+                            Toggle(isOn: $preferences.pencilOnly) { Text("Pencil Only Mode") }
+                            Toggle(isOn: $preferences.vectorEraser) { Text("Vector Eraser") }
+                        }.toggleStyle(SwitchToggleStyle(tint: Color.accentColor))
                     case .properties:
                         PropertiesView(inkingTool: $inkingTool, toolWidth: $toolWidth, toolOpacity: $toolOpacity)
                     case .color:

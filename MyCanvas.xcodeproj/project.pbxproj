@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3F749E63263DCF300058EEF1 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F749E62263DCF300058EEF1 /* Preferences.swift */; };
-		3F7F5B272655A3AB00BE9D68 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7F5B262655A3AB00BE9D68 /* SettingsView.swift */; };
 		3F82913D26179DF40062B168 /* CanvasWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F82913C26179DF40062B168 /* CanvasWrapper.swift */; };
 		3F83383E26533A280006E56E /* ColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F83383D26533A280006E56E /* ColorView.swift */; };
 		3F833842265352E60006E56E /* PropertiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F833841265352E60006E56E /* PropertiesView.swift */; };
@@ -24,7 +23,6 @@
 
 /* Begin PBXFileReference section */
 		3F749E62263DCF300058EEF1 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
-		3F7F5B262655A3AB00BE9D68 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		3F82913C26179DF40062B168 /* CanvasWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasWrapper.swift; sourceTree = "<group>"; };
 		3F83383D26533A280006E56E /* ColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorView.swift; sourceTree = "<group>"; };
 		3F833841265352E60006E56E /* PropertiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertiesView.swift; sourceTree = "<group>"; };
@@ -77,7 +75,6 @@
 				3F8E0E7225F7D674002785FD /* GalleryView.swift */,
 				3F8E0E7525F7D72A002785FD /* CanvasView.swift */,
 				3F82913C26179DF40062B168 /* CanvasWrapper.swift */,
-				3F7F5B262655A3AB00BE9D68 /* SettingsView.swift */,
 				3F833841265352E60006E56E /* PropertiesView.swift */,
 				3F83383D26533A280006E56E /* ColorView.swift */,
 				3F8CDFA2260E96F400B0C413 /* MyCanvas.xcdatamodeld */,
@@ -175,7 +172,6 @@
 				3F83383E26533A280006E56E /* ColorView.swift in Sources */,
 				3F749E63263DCF300058EEF1 /* Preferences.swift in Sources */,
 				3F8E0E6325F78E24002785FD /* MyCanvasApp.swift in Sources */,
-				3F7F5B272655A3AB00BE9D68 /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

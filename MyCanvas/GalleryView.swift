@@ -19,13 +19,18 @@ struct GalleryView: View {
         List {
             ForEach(drawings) { drawing in
                 HStack {
-                    NavigationLink(destination: CanvasView(drawingId: drawing.id ?? UUID()).ignoresSafeArea(edges: .bottom), label: {
-                        Text(drawing.name ?? "Untitled").bold()
-                        Text(drawing.timestamp ?? Date(), formatter: dateFormatter).italic()
-                    })
+                    NavigationLink(destination:
+                                    CanvasView(drawingId: drawing.id ?? UUID())
+                                    .ignoresSafeArea(edges: .bottom)
+                                    .statusBar(hidden: true)
+                                   , label: {
+                                    Text(drawing.name ?? "Untitled").bold()
+                                    Text(drawing.timestamp ?? Date(), formatter: dateFormatter).italic()
+                                   }).foregroundColor(Color("AccentColorSubtitle"))
                 }
             }.onDelete(perform: deleteDrawing)
-        }.toolbar {
+        }
+        .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 EditButton()
             }
