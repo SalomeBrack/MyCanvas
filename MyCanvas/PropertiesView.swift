@@ -33,14 +33,14 @@ struct PropertiesView: View {
                 Spacer()
                 Text("\(toolWidth, specifier: "%.0f")")
             }
-            Slider(value: $toolWidth, in: 0.1...25).padding()
+            Slider(value: $toolWidth, in: 0.1...25)
             
             HStack {
                 Text("Opacity:")
                 Spacer()
                 Text("\(toolOpacity * 100, specifier: "%.0f")")
             }
-            Slider(value: $toolOpacity, in: 0.01...1).padding()
+            Slider(value: $toolOpacity, in: 0.01...1)
         }
     }
 }

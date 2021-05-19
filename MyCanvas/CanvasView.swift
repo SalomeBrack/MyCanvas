@@ -14,9 +14,8 @@ struct CanvasView: View {
     @Environment(\.undoManager) private var undoManager
     var drawingId: UUID
     
-    @State var activeSheet: ActiveSheet?
+    @State var activeSheet: ActiveSheetCanvasView?
     @State var activeTool: ActiveTool = .ink
-    @State var sheetIsPresented: Bool = false
     @State var alertIsPresented: Bool = false
     
     @State var canvasView = PKCanvasView()
@@ -122,7 +121,7 @@ struct CanvasView: View {
     }
 }
 
-enum ActiveSheet: Identifiable {
+enum ActiveSheetCanvasView: Identifiable {
     case settings, properties, color
     var id: Int { hashValue }
 }
@@ -131,6 +130,3 @@ enum ActiveTool: Identifiable {
     case ink, eraser, lasso
     var id: Int { hashValue }
 }
-
-/// https://developer.apple.com/design/human-interface-guidelines/sf-symbols/overview/
-/// https://developer.apple.com/design/human-interface-guidelines/ios/icons-and-images/system-icons/
