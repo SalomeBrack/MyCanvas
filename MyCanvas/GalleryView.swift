@@ -19,7 +19,7 @@ struct GalleryView: View {
         List {
             ForEach(drawings) { drawing in
                 HStack {
-                    NavigationLink(destination: CanvasView(drawingId: drawing.id ?? UUID()), label: {
+                    NavigationLink(destination: CanvasView(drawingId: drawing.id ?? UUID()).ignoresSafeArea(edges: .bottom), label: {
                         Text(drawing.name ?? "Untitled").bold()
                         Text(drawing.timestamp ?? Date(), formatter: dateFormatter).italic()
                     })

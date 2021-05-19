@@ -14,7 +14,7 @@ struct CanvasView: View {
     @Environment(\.undoManager) private var undoManager
     var drawingId: UUID
     
-    @State var activeSheet: ActiveSheetCanvasView?
+    @State var activeSheet: ActiveSheet?
     @State var activeTool: ActiveTool = .ink
     @State var alertIsPresented: Bool = false
     
@@ -27,10 +27,11 @@ struct CanvasView: View {
     @State var toolWidth: Double = 25
     @State var toolOpacity: Double = 1
     @State var hsb: [Double] = [0, 0, 0]
-
-    let pencilInteraction = UIPencilInteraction()
+    var selectedColor: Color { Color.init(hue: hsb[0], saturation: hsb[1], brightness: hsb[2]) }
+    
     var body: some View {
         VStack {
+            /// Untere Leiste
             HStack(spacing: 20) {
                 /// Stift / Radierer auswählen
                 Button(action: { activeTool = .ink }, label: { Text("Brush").fontWeight(activeTool == .ink  ? .bold : .none) })
@@ -49,14 +50,15 @@ struct CanvasView: View {
                     RoundedRectangle(cornerRadius: 6, style: .continuous)
                         .strokeBorder(Color.primary.opacity(0.4), lineWidth: 2)
                         .frame(width: 35, height: 35)
-                        .background(RoundedRectangle(cornerRadius: 6, style: .continuous).fill(Color.init(hue: hsb[0], saturation: hsb[1], brightness: hsb[2])))
+                        .background(RoundedRectangle(cornerRadius: 6, style: .continuous).fill(selectedColor))
                 })
                 //ColorPicker(selection: $color, supportsOpacity: false, label: { Text("Color") })
-                
             }.padding()
             
-            CanvasWrapper(drawingId: drawingId, canvasView: $canvasView, activeTool: $activeTool, inkType: $inkingTool, rulerActive: $rulerActive, toolWidth: $toolWidth, toolOpacity: $toolOpacity, hsb: $hsb).ignoresSafeArea()
+            /// Canvas
+            CanvasWrapper(drawingId: drawingId, canvasView: $canvasView, activeTool: $activeTool, inkType: $inkingTool, rulerActive: $rulerActive, toolWidth: $toolWidth, toolOpacity: $toolOpacity, hsb: $hsb)
             
+            /// Obere Leiste
             .navigationBarItems(
                 leading: HStack(spacing: 25) { Text("")
                     /// Rückgängig, Wiederholen und Löschen
@@ -70,23 +72,14 @@ struct CanvasView: View {
                     Button(action: { activeSheet = .settings }, label: { Text("Settings") })
                 }
             )
+            /// Sheet für Einstellungen, Stift-Einstellungen, Farbe
             .sheet(item: $activeSheet) { item in
                 VStack {
                     switch item {
-                    
-                    /// Einstellungen
                     case .settings:
-                        VStack(spacing: 25) {
-                            Toggle(isOn: $preferences.darkMode) { Text("Dark Mode") }
-                            Toggle(isOn: $preferences.pencilOnly) { Text("Pencil Only Mode") }
-                            Toggle(isOn: $preferences.vectorEraser) { Text("Vector Eraser") }
-                        }
-                        
-                    /// Stift Eigenschaften
+                        SettingsView()
                     case .properties:
                         PropertiesView(inkingTool: $inkingTool, toolWidth: $toolWidth, toolOpacity: $toolOpacity)
-                        
-                    /// Farbe wählen
                     case .color:
                         ColorView(hsb: $hsb)
                     }
@@ -106,9 +99,6 @@ struct CanvasView: View {
                     undoManager?.removeAllActions()
                 }, secondaryButton: .cancel()
             )}
-            
-            /// Bei Doppeltippen auf Canvas
-            //.onTapGesture(count: 2, perform: { eraserActive.toggle() })
         }
         .onAppear {
             /// Tool Settings laden
@@ -121,7 +111,7 @@ struct CanvasView: View {
     }
 }
 
-enum ActiveSheetCanvasView: Identifiable {
+enum ActiveSheet: Identifiable {
     case settings, properties, color
     var id: Int { hashValue }
 }
