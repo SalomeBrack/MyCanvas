@@ -64,8 +64,9 @@ struct CanvasWrapper: UIViewRepresentable {
         canvasView.isRulerActive = rulerActive
         
         /// Zoomen
-        canvasView.minimumZoomScale = 1
         canvasView.maximumZoomScale = 2
+        canvasView.minimumZoomScale = 0.5
+        canvasView.zoomScale = 1
         
         return canvasView
     }
@@ -75,7 +76,7 @@ struct CanvasWrapper: UIViewRepresentable {
         if UIDevice.current.userInterfaceIdiom != .pad { canvasView.drawingPolicy = .anyInput }
         else { canvasView.drawingPolicy = preferences.pencilOnly ? .pencilOnly : .anyInput }
         
-        /// Interface Style
+        /// Dark oder Light Mode im Canvas
         canvasView.overrideUserInterfaceStyle = preferences.darkMode ? .dark : .light
         //toolPicker.overrideUserInterfaceStyle = preferences.darkMode ? .dark : .light
         
@@ -86,6 +87,14 @@ struct CanvasWrapper: UIViewRepresentable {
         case .lasso: canvasView.tool = lassoTool
         }
         canvasView.isRulerActive = rulerActive
+        
+        // Canvas vergrößern wenn Content näher an den Rand kommt
+        if !canvasView.drawing.bounds.isNull {
+            let contentWidth = max(canvasView.bounds.width, (canvasView.drawing.bounds.maxX + 1000) * canvasView.zoomScale)
+            let contentHeight = max(canvasView.bounds.height, (canvasView.drawing.bounds.maxY + 1000) * canvasView.zoomScale)
+            
+            canvasView.contentSize = CGSize(width: contentWidth, height: contentHeight)
+        }
     }
     
     /// Änderungen erkennen
@@ -103,8 +112,8 @@ struct CanvasWrapper: UIViewRepresentable {
         /// Tool Einstellungen speichern
         UserDefaults.standard.set([hsb[0], hsb[1], hsb[2], toolOpacity, toolWidth,
                                    inkType == .pencil ? 2 : inkType == .marker ? 1 : 0,
-                                   activeTool == .lasso ? 2 : activeTool == .eraser ? 1 : 0
-        ], forKey: "toolSettings")
+                                   activeTool == .lasso ? 2 : activeTool == .eraser ? 1 : 0],
+                                  forKey: "toolSettings")
     }
 }
 

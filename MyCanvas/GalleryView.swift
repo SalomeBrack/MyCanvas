@@ -49,7 +49,7 @@ struct GalleryView: View {
                 }
                     
                 HStack(spacing: 60) {
-                    Button(action: { sheetIsPresented = false }, label: { Text("Cancel").accentColor(.red) })
+                    Button(action: { sheetIsPresented = false }, label: { Text("Cancel").accentColor(Color("AccentColorSubtitle")) })
                     Button(action: {
                         sheetIsPresented = false
                         addDrawing()
