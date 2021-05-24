@@ -19,7 +19,6 @@ struct CanvasView: View {
     @State var alertIsPresented: Bool = false
     
     @State var canvasView = PKCanvasView()
-    //@State var toolPicker = PKToolPicker()
 
     /// Stift Eigenschaften
     @State var inkingTool: PKInkingTool.InkType = .pen
@@ -52,7 +51,6 @@ struct CanvasView: View {
                         .frame(width: 35, height: 35)
                         .background(RoundedRectangle(cornerRadius: 6, style: .continuous).fill(selectedColor))
                 })
-                //ColorPicker(selection: $color, supportsOpacity: false, label: { Text("Color") })
             }.padding().foregroundColor(Color("AccentColorSubtitle"))
             
             /// Canvas

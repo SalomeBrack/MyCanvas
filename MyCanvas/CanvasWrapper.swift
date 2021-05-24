@@ -14,7 +14,6 @@ struct CanvasWrapper: UIViewRepresentable {
     @ObservedObject var preferences = Preferences()
     
     @Binding var canvasView: PKCanvasView
-    //@Binding var toolPicker: PKToolPicker
     
     /// Stift auswählen
     @Binding var activeTool: ActiveTool
@@ -46,14 +45,8 @@ struct CanvasWrapper: UIViewRepresentable {
         if UIDevice.current.userInterfaceIdiom != .pad { canvasView.drawingPolicy = .anyInput }
         else { canvasView.drawingPolicy = preferences.pencilOnly ? .pencilOnly : .anyInput }
         
-        /// Tool Picker
-        /*toolPicker.setVisible(true, forFirstResponder: canvasView)
-        toolPicker.addObserver(canvasView)
-        canvasView.becomeFirstResponder()*/
-        
         /// Interface Style
         canvasView.overrideUserInterfaceStyle = preferences.darkMode ? .dark : .light
-        //toolPicker.overrideUserInterfaceStyle = preferences.darkMode ? .dark : .light
         
         /// Stift auswählen
         switch activeTool {
@@ -65,7 +58,7 @@ struct CanvasWrapper: UIViewRepresentable {
         
         /// Zoomen
         canvasView.maximumZoomScale = 2
-        canvasView.minimumZoomScale = 0.5
+        canvasView.minimumZoomScale = 1
         canvasView.zoomScale = 1
         
         return canvasView
@@ -78,7 +71,6 @@ struct CanvasWrapper: UIViewRepresentable {
         
         /// Dark oder Light Mode im Canvas
         canvasView.overrideUserInterfaceStyle = preferences.darkMode ? .dark : .light
-        //toolPicker.overrideUserInterfaceStyle = preferences.darkMode ? .dark : .light
         
         /// Stift auswählen
         switch activeTool {
@@ -88,7 +80,7 @@ struct CanvasWrapper: UIViewRepresentable {
         }
         canvasView.isRulerActive = rulerActive
         
-        // Canvas vergrößern wenn Content näher an den Rand kommt
+        /// Canvas vergrößern wenn Content näher an den Rand kommt
         if !canvasView.drawing.bounds.isNull {
             let contentWidth = max(canvasView.bounds.width, (canvasView.drawing.bounds.maxX + 1000) * canvasView.zoomScale)
             let contentHeight = max(canvasView.bounds.height, (canvasView.drawing.bounds.maxY + 1000) * canvasView.zoomScale)
@@ -131,9 +123,3 @@ class Coordinator: NSObject, PKCanvasViewDelegate {
         saveDrawing(canvasView.drawing.dataRepresentation())
     }
 }
-
-
-/*
- /// Verhindert, dass man etwas malen kann
- canvasView.drawingGestureRecognizer.isEnabled = false
-*/

@@ -76,24 +76,6 @@ struct ColorView: View {
                     )).frame(maxHeight: 15).padding()
                 ColorSlider(thumbColor: UIColor(color), value: $hsb[2])
             }
-            
-            /*
-            HStack {
-                Text("Hue:").frame(minWidth: 90, alignment: .trailing)
-                Text("\(hsb[0] * 360, specifier: "%.0f")").frame(minWidth: 30, alignment: .leading)
-                Slider(value: $hsb[0], in: 0...1).padding()
-            }
-            HStack {
-                Text("Saturation:").frame(minWidth: 90, alignment: .trailing)
-                Text("\(hsb[1] * 100, specifier: "%.0f")").frame(minWidth: 30, alignment: .leading)
-                Slider(value: $hsb[1], in: 0...1).padding()
-            }
-            HStack {
-                Text("Brightness:").frame(minWidth: 90, alignment: .trailing)
-                Text("\(hsb[2] * 100, specifier: "%.0f")").frame(minWidth: 30, alignment: .leading)
-                Slider(value: $hsb[2], in: 0...1).padding()
-            }
-            */
         }
     }
 }
@@ -133,7 +115,6 @@ struct ColorSlider: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: UISlider, context: Context) {
-        // Coordinating data between UIView and SwiftUI view
         uiView.thumbTintColor = thumbColor
         uiView.value = Float(self.value)
     }
